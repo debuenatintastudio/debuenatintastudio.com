@@ -49,7 +49,7 @@ document.querySelectorAll(".accordion-trigger").forEach((trigger) => {
   });
 });
 
-// Revelado de las fotos del portfolio al hacer scroll
+// Revelado de las categorías del portfolio al hacer scroll
 const revealObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
@@ -61,7 +61,7 @@ const revealObserver = new IntersectionObserver(
   },
   { threshold: 0.15 }
 );
-document.querySelectorAll(".portfolio-item").forEach((item) => revealObserver.observe(item));
+document.querySelectorAll(".carousel-wrap").forEach((item) => revealObserver.observe(item));
 
 // Formulario
 const form = document.getElementById("ideaForm");
