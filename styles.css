@@ -127,13 +127,10 @@ img { max-width: 100%; display: block; }
 .hero-bg {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at 15% 20%, var(--oak) 0%, transparent 45%),
-    radial-gradient(circle at 85% 0%, var(--ink) 0%, transparent 50%),
-    radial-gradient(circle at 60% 95%, var(--stone-deep) 0%, transparent 55%),
-    #3a352e;
-  filter: blur(30px);
-  opacity: 0.35;
+  background-image: url("hero-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.6;
   transform: scale(1.1);
 }
 
