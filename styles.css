@@ -312,6 +312,7 @@ section h2 {
 }
 
 .carousel-wrap {
+  position: relative;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.6s ease, transform 0.6s ease;
@@ -328,9 +329,6 @@ section h2 {
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  gap: 0;
-  margin: 0 -20px;
-  padding: 0 20px;
 }
 
 .carousel::-webkit-scrollbar {
@@ -339,19 +337,41 @@ section h2 {
 
 .carousel-item {
   flex: 0 0 100%;
-  scroll-snap-align: center;
+  width: 100%;
+  scroll-snap-align: start;
+}
+
+.carousel-item img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  background: var(--stone);
+  border-radius: 6px;
+  display: block;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(32, 30, 27, 0.55);
+  color: var(--cream);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.carousel-item img {
-  width: 100%;
-  object-fit: contain;
-  background: var(--stone);
-  border-radius: 6px;
-  max-height: 70vh;
-}
+.carousel-prev { left: 10px; }
+.carousel-next { right: 10px; }
+
+.carousel-arrow[hidden] { display: none; }
 
 .portfolio-item figcaption {
   position: absolute;
@@ -498,5 +518,5 @@ section h2 {
 }
 
 @media (min-width: 600px) {
-  .carousel-item img { max-height: 65vh; }
+  .carousel-item img { aspect-ratio: 4 / 3; }
 }

@@ -63,6 +63,35 @@ const revealObserver = new IntersectionObserver(
 );
 document.querySelectorAll(".carousel-wrap").forEach((item) => revealObserver.observe(item));
 
+// Flechas de navegación de cada carrusel
+document.querySelectorAll(".carousel-wrap").forEach((wrap) => {
+  const track = wrap.querySelector(".carousel");
+  const prevBtn = wrap.querySelector(".carousel-prev");
+  const nextBtn = wrap.querySelector(".carousel-next");
+  const items = track.querySelectorAll(".carousel-item");
+
+  function updateArrows() {
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    prevBtn.hidden = track.scrollLeft <= 4;
+    nextBtn.hidden = track.scrollLeft >= maxScroll - 4;
+  }
+
+  prevBtn.addEventListener("click", () => {
+    track.scrollBy({ left: -track.clientWidth, behavior: "smooth" });
+  });
+  nextBtn.addEventListener("click", () => {
+    track.scrollBy({ left: track.clientWidth, behavior: "smooth" });
+  });
+  track.addEventListener("scroll", updateArrows);
+
+  if (items.length <= 1) {
+    prevBtn.hidden = true;
+    nextBtn.hidden = true;
+  } else {
+    updateArrows();
+  }
+});
+
 // Formulario
 const form = document.getElementById("ideaForm");
 const submitBtn = document.getElementById("submitBtn");
