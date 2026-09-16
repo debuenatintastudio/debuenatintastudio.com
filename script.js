@@ -49,6 +49,20 @@ document.querySelectorAll(".accordion-trigger").forEach((trigger) => {
   });
 });
 
+// Revelado de las fotos del portfolio al hacer scroll
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.15 }
+);
+document.querySelectorAll(".portfolio-item").forEach((item) => revealObserver.observe(item));
+
 // Formulario
 const form = document.getElementById("ideaForm");
 const submitBtn = document.getElementById("submitBtn");
