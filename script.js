@@ -2,6 +2,10 @@
 // 1) Crea una cuenta gratis en https://formspree.io, crea un formulario nuevo
 //    y pega aquí el endpoint que te da (algo como "https://formspree.io/f/abcd1234")
 const FORM_ENDPOINT = "https://formspree.io/f/xzezpejp";
+
+// 2) Webhook del equipo del bot (n8n) — recibe los datos del formulario
+//    en cuanto alguien lo envía, en paralelo al envío a Formspree.
+const WEBHOOK_ENDPOINT = "https://n8n.aiagencyusa.com/webhook/1f1d5a94-4338-43d6-b4a6-4ff112d00d0a";
 // -------------------------------------------
 
 // Menú móvil
@@ -120,6 +124,17 @@ form.addEventListener("submit", async (e) => {
 
   try {
     const formData = new FormData(form);
+
+    // Datos en formato simple para el webhook (JSON)
+    const payload = Object.fromEntries(formData.entries());
+
+    // Se manda al webhook del bot en paralelo; si falla, no bloquea el
+    // envío principal a Formspree ni la experiencia del cliente.
+    fetch(WEBHOOK_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    }).catch((err) => console.error("Webhook error:", err));
 
     const response = await fetch(FORM_ENDPOINT, {
       method: "POST",
