@@ -144,6 +144,8 @@ form.addEventListener("submit", async (e) => {
 
     if (!response.ok) throw new Error("submit_failed");
 
+    fbq('track', 'Lead');
+
     form.hidden = true;
     const thankYou = document.getElementById("thankYou");
     thankYou.hidden = false;
