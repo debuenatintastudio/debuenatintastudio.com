@@ -32,57 +32,79 @@
   <section class="hero" id="formulario">
     <div class="hero-bg"></div>
     <div class="hero-content">
-      <p class="hero-welcome">Bienvenido a Debuenatinta</p>
-      <p class="hero-trust">9 años de experiencia · <span class="hero-trust-badge">★ 5.0 en Google</span></p>
       <h1>¿Estás listo para darle <span class="accent">vida a tu idea</span>?</h1>
-      <p class="hero-sub">Cuéntanos tu idea y lo hacemos realidad</p>
 
-      <form id="ideaForm" novalidate>
-        <div class="field">
-          <label for="nombre">Nombre</label>
-          <input type="text" id="nombre" name="nombre" required>
-        </div>
+      <div class="form-card">
+        <p class="form-card-title">Cuéntanos tu idea en unos segundos</p>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 
-        <div class="field">
-          <label for="telefono">Teléfono</label>
-          <input type="tel" id="telefono" name="telefono" required>
-        </div>
+        <form id="ideaForm" novalidate>
 
-        <div class="field">
-          <span class="field-label">Tamaño</span>
-          <div class="chip-group" id="sizeChips" role="radiogroup" aria-label="Tamaño del tatuaje">
-            <button type="button" class="chip" data-value="pequeno" role="radio" aria-checked="false">Pequeño · 5cm</button>
-            <button type="button" class="chip" data-value="mediano" role="radio" aria-checked="false">Mediano · 15cm</button>
-            <button type="button" class="chip" data-value="grande" role="radio" aria-checked="false">Grande · 25cm</button>
-            <button type="button" class="chip" data-value="extragrande" role="radio" aria-checked="false">Extra grande · +25cm</button>
+          <div class="form-step" data-step="1">
+            <p class="step-question">¿Qué tamaño tiene tu idea?</p>
+            <div class="chip-group" id="sizeChips" role="radiogroup" aria-label="Tamaño del tatuaje">
+              <button type="button" class="chip" data-value="pequeno" role="radio" aria-checked="false">Pequeño · 5cm</button>
+              <button type="button" class="chip" data-value="mediano" role="radio" aria-checked="false">Mediano · 15cm</button>
+              <button type="button" class="chip" data-value="grande" role="radio" aria-checked="false">Grande · 25cm</button>
+              <button type="button" class="chip" data-value="extragrande" role="radio" aria-checked="false">Extra grande · +25cm</button>
+            </div>
+            <input type="hidden" name="tamano" id="tamanoInput" required>
+            <p class="field-error" id="tamanoError">Elige un tamaño.</p>
           </div>
-          <input type="hidden" name="tamano" id="tamanoInput" required>
-          <p class="field-error" id="tamanoError">Elige un tamaño.</p>
-        </div>
 
-        <div class="field">
-          <label for="descripcion">Cuéntanos qué quieres tatuarte</label>
-          <textarea id="descripcion" name="descripcion" rows="3" required></textarea>
-        </div>
-
-        <div class="field">
-          <span class="field-label">¿Te interesa asesoramiento profesional sobre tu idea?</span>
-          <div class="toggle-group" id="asesoramientoToggle" role="radiogroup" aria-label="Asesoramiento profesional">
-            <button type="button" class="toggle-btn" data-value="si" role="radio" aria-checked="false">Sí</button>
-            <button type="button" class="toggle-btn" data-value="no" role="radio" aria-checked="false">No</button>
+          <div class="form-step" data-step="2" hidden>
+            <p class="step-question">¿En qué zona del cuerpo te gustaría?</p>
+            <div class="chip-group" id="zonaChips" role="radiogroup" aria-label="Zona del cuerpo">
+              <button type="button" class="chip" data-value="brazo" role="radio" aria-checked="false">Brazo</button>
+              <button type="button" class="chip" data-value="pierna" role="radio" aria-checked="false">Pierna</button>
+              <button type="button" class="chip" data-value="espalda" role="radio" aria-checked="false">Espalda</button>
+              <button type="button" class="chip" data-value="cuello" role="radio" aria-checked="false">Cuello</button>
+              <button type="button" class="chip" data-value="pecho" role="radio" aria-checked="false">Pecho</button>
+            </div>
+            <input type="hidden" name="zona" id="zonaInput" required>
+            <p class="field-error" id="zonaError">Elige una zona.</p>
           </div>
-          <input type="hidden" name="asesoramiento" id="asesoramientoInput" required>
-          <p class="field-error" id="asesoramientoError">Elige una opción.</p>
+
+          <div class="form-step" data-step="3" hidden>
+            <p class="step-question">¿Te interesa asesoramiento profesional sobre tu idea?</p>
+            <div class="toggle-group" id="asesoramientoToggle" role="radiogroup" aria-label="Asesoramiento profesional">
+              <button type="button" class="toggle-btn" data-value="si" role="radio" aria-checked="false">Sí</button>
+              <button type="button" class="toggle-btn" data-value="no" role="radio" aria-checked="false">No</button>
+            </div>
+            <input type="hidden" name="asesoramiento" id="asesoramientoInput" required>
+            <p class="field-error" id="asesoramientoError">Elige una opción.</p>
+          </div>
+
+          <div class="form-step" data-step="4" hidden>
+            <label for="descripcion">Cuéntanos qué quieres tatuarte</label>
+            <textarea id="descripcion" name="descripcion" rows="3"></textarea>
+          </div>
+
+          <div class="form-step" data-step="5" hidden>
+            <p class="step-question">¿Cómo te contactamos?</p>
+            <div class="field">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" name="nombre" required>
+            </div>
+            <div class="field">
+              <label for="telefono">Teléfono</label>
+              <input type="tel" id="telefono" name="telefono" required>
+            </div>
+          </div>
+
+          <div class="step-nav">
+            <button type="button" class="step-back" id="prevStepBtn" hidden>← Atrás</button>
+            <button type="button" class="step-next" id="nextStepBtn">Siguiente →</button>
+            <button type="submit" class="submit-btn" id="submitBtn" hidden>Enviar mi idea</button>
+          </div>
+
+          <p class="form-status" id="formStatus" role="status"></p>
+        </form>
+
+        <div class="thank-you" id="thankYou" hidden>
+          <p class="thank-you-title">Gracias, <span id="thankYouName">.</span></p>
+          <p class="thank-you-body">¡Listo! Ya tenemos tu idea. Nos hace ilusión acompañarte en este primer paso — te contactaremos muy pronto.</p>
         </div>
-
-        <button type="submit" class="submit-btn" id="submitBtn">Enviar mi idea</button>
-
-        <p class="form-status" id="formStatus" role="status"></p>
-      </form>
-
-      <div class="thank-you" id="thankYou" hidden>
-        <p class="thank-you-title">Gracias, <span id="thankYouName">.</span></p>
-        <p class="thank-you-body">Hemos recibido tu idea y te responderemos en breve por teléfono.</p>
       </div>
     </div>
   </section>

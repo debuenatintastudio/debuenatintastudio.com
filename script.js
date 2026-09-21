@@ -37,6 +37,7 @@ function setupRadioGroup(groupEl, hiddenInput) {
 }
 
 setupRadioGroup(document.getElementById("sizeChips"), document.getElementById("tamanoInput"));
+setupRadioGroup(document.getElementById("zonaChips"), document.getElementById("zonaInput"));
 setupRadioGroup(document.getElementById("asesoramientoToggle"), document.getElementById("asesoramientoInput"));
 
 // Acordeón de preguntas frecuentes
@@ -111,8 +112,65 @@ const submitBtn = document.getElementById("submitBtn");
 const formStatus = document.getElementById("formStatus");
 const tamanoInput = document.getElementById("tamanoInput");
 const tamanoError = document.getElementById("tamanoError");
+const zonaInput = document.getElementById("zonaInput");
+const zonaError = document.getElementById("zonaError");
 const asesoramientoInput = document.getElementById("asesoramientoInput");
 const asesoramientoError = document.getElementById("asesoramientoError");
+
+// Navegación del formulario por pasos
+const steps = Array.from(document.querySelectorAll(".form-step"));
+const totalSteps = steps.length;
+const progressFill = document.getElementById("progressFill");
+const prevStepBtn = document.getElementById("prevStepBtn");
+const nextStepBtn = document.getElementById("nextStepBtn");
+const descripcionInput = document.getElementById("descripcion");
+let currentStep = 1;
+
+function showStep(n) {
+  steps.forEach((step) => {
+    step.hidden = Number(step.dataset.step) !== n;
+  });
+  progressFill.style.width = (n / totalSteps) * 100 + "%";
+  prevStepBtn.hidden = n === 1;
+  nextStepBtn.hidden = n === totalSteps;
+  submitBtn.hidden = n !== totalSteps;
+}
+
+function stepIsValid(n) {
+  if (n === 1) {
+    tamanoError.classList.toggle("visible", !tamanoInput.value);
+    return !!tamanoInput.value;
+  }
+  if (n === 2) {
+    zonaError.classList.toggle("visible", !zonaInput.value);
+    return !!zonaInput.value;
+  }
+  if (n === 3) {
+    asesoramientoError.classList.toggle("visible", !asesoramientoInput.value);
+    return !!asesoramientoInput.value;
+  }
+  if (n === 4) {
+    if (!descripcionInput.value.trim()) {
+      descripcionInput.reportValidity();
+      return false;
+    }
+    return true;
+  }
+  return true;
+}
+
+nextStepBtn.addEventListener("click", () => {
+  if (!stepIsValid(currentStep)) return;
+  currentStep = Math.min(currentStep + 1, totalSteps);
+  showStep(currentStep);
+});
+
+prevStepBtn.addEventListener("click", () => {
+  currentStep = Math.max(currentStep - 1, 1);
+  showStep(currentStep);
+});
+
+showStep(currentStep);
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -122,8 +180,9 @@ form.addEventListener("submit", async (e) => {
   let valid = form.checkValidity();
 
   tamanoError.classList.toggle("visible", !tamanoInput.value);
+  zonaError.classList.toggle("visible", !zonaInput.value);
   asesoramientoError.classList.toggle("visible", !asesoramientoInput.value);
-  if (!tamanoInput.value || !asesoramientoInput.value) valid = false;
+  if (!tamanoInput.value || !zonaInput.value || !asesoramientoInput.value) valid = false;
 
   if (!valid) {
     form.reportValidity();
