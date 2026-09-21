@@ -1,24 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1101731379100300');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1101731379100300&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
-<meta name="facebook-domain-verification" content="svlqdmb5bnk5mwojanbx9gokf6obby" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Debuenatinta — Estudio de tatuajes en Valencia</title>
@@ -51,7 +33,8 @@ src="https://www.facebook.com/tr?id=1101731379100300&ev=PageView&noscript=1"
     <div class="hero-bg"></div>
     <div class="hero-content">
       <p class="hero-welcome">Bienvenido a Debuenatinta</p>
-      <h1>¿Estás listo para darle vida a tu idea?</h1>
+      <p class="hero-trust">9 años de experiencia · <span class="hero-trust-badge">★ 5.0 en Google</span></p>
+      <h1>¿Estás listo para darle <span class="accent">vida a tu idea</span>?</h1>
       <p class="hero-sub">Cuéntanos tu idea y lo hacemos realidad</p>
 
       <form id="ideaForm" novalidate>
@@ -104,6 +87,15 @@ src="https://www.facebook.com/tr?id=1101731379100300&ev=PageView&noscript=1"
     </div>
   </section>
 
+  <section class="qualify">
+    <h2>Este estudio es para ti si…</h2>
+    <ul class="qualify-list">
+      <li><span class="qualify-check">✓</span> Quieres un diseño personalizado, no una plantilla de catálogo</li>
+      <li><span class="qualify-check">✓</span> Buscas que un profesional te asesore sobre tu idea para no cometer errores</li>
+      <li><span class="qualify-check">✓</span> Prefieres tener un presupuesto claro antes de decidirte</li>
+    </ul>
+  </section>
+
   <section class="portfolio" id="portfolio">
     <h2>Portfolio</h2>
 
@@ -151,6 +143,10 @@ src="https://www.facebook.com/tr?id=1101731379100300&ev=PageView&noscript=1"
     </div>
   </section>
 
+  <div class="inline-cta-wrap">
+    <a href="#formulario" class="inline-cta">¿Te ha convencido? Cuéntanos tu idea</a>
+  </div>
+
   <section class="faq" id="faq">
     <h2>Preguntas frecuentes</h2>
     <div class="accordion">
@@ -180,6 +176,34 @@ src="https://www.facebook.com/tr?id=1101731379100300&ev=PageView&noscript=1"
       </div>
     </div>
   </section>
+
+  <section class="stats">
+    <div class="stats-grid">
+      <div class="stat-item"><p class="stat-number">9</p><p class="stat-label">Años de experiencia</p></div>
+      <div class="stat-item"><p class="stat-number">5.0</p><p class="stat-label">★ en Google</p></div>
+      <div class="stat-item"><p class="stat-number">+300</p><p class="stat-label">Tatuajes realizados</p></div>
+    </div>
+  </section>
+
+  <section class="how-it-works">
+    <h2>¿Cómo funciona?</h2>
+    <div class="step">
+      <span class="step-number">1</span>
+      <div><p class="step-title">Rellena el formulario</p><p class="step-body">Cuéntanos tu idea, el tamaño y la zona donde quieres tatuarte.</p></div>
+    </div>
+    <div class="step">
+      <span class="step-number">2</span>
+      <div><p class="step-title">Te confirmamos</p><p class="step-body">Te contactamos por teléfono para concretar día, hora y presupuesto.</p></div>
+    </div>
+    <div class="step">
+      <span class="step-number">3</span>
+      <div><p class="step-title">Nos vemos en el estudio</p><p class="step-body">Le damos forma a tu idea y la hacemos realidad.</p></div>
+    </div>
+  </section>
+
+  <div class="inline-cta-wrap">
+    <a href="#formulario" class="inline-cta">Reserva tu cita, cuéntanos tu idea</a>
+  </div>
 
   <section class="testimonios" id="testimonios">
     <h2>Lo que dicen de nosotros</h2>
@@ -211,6 +235,8 @@ src="https://www.facebook.com/tr?id=1101731379100300&ev=PageView&noscript=1"
   <p><a href="tel:+34621076860" class="footer-phone">+34 621 076 860</a></p>
   <p>Debuenatinta · Valencia</p>
 </footer>
+
+<a href="#formulario" class="floating-cta" id="floatingCta">Cuéntanos tu idea</a>
 
 <script src="script.js"></script>
 </body>

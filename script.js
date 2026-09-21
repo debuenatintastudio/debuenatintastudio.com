@@ -49,6 +49,19 @@ document.querySelectorAll(".accordion-trigger").forEach((trigger) => {
   });
 });
 
+// Botón flotante: se muestra cuando el formulario deja de estar a la vista
+const floatingCta = document.getElementById("floatingCta");
+const heroSection = document.getElementById("formulario");
+const heroObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      floatingCta.classList.toggle("visible", !entry.isIntersecting);
+    });
+  },
+  { threshold: 0.1 }
+);
+heroObserver.observe(heroSection);
+
 // Revelado de las categorías del portfolio al hacer scroll
 const revealObserver = new IntersectionObserver(
   (entries) => {
@@ -143,8 +156,6 @@ form.addEventListener("submit", async (e) => {
     });
 
     if (!response.ok) throw new Error("submit_failed");
-
-    fbq('track', 'Lead');
 
     form.hidden = true;
     const thankYou = document.getElementById("thankYou");
