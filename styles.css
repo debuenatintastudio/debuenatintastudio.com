@@ -688,9 +688,9 @@ section h2 {
 
 .review-pair img {
   width: 50%;
-  aspect-ratio: auto;
+  aspect-ratio: 4 / 3;
   object-fit: contain;
-  background: var(--stone);
+  background: #fff;
   border-radius: 6px;
   border: 1px solid var(--line);
 }
@@ -817,5 +817,4 @@ section h2 {
 
 @media (min-width: 600px) {
   .carousel-item img { aspect-ratio: 4 / 3; }
-  .review-pair img { aspect-ratio: auto; }
 }
