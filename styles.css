@@ -294,18 +294,6 @@ img { max-width: 100%; display: block; }
   margin: 0 0 20px;
 }
 
-.estudio-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.estudio-item img {
-  width: 100%;
-  border-radius: 6px;
-  display: block;
-}
-
 .stats {
   background: var(--ink);
   padding: 32px 20px;
@@ -692,6 +680,21 @@ section h2 {
   margin-top: 4px;
 }
 
+.review-pair {
+  display: flex;
+  gap: 10px;
+  padding: 0 4px;
+}
+
+.review-pair img {
+  width: 50%;
+  aspect-ratio: auto;
+  object-fit: contain;
+  background: var(--stone);
+  border-radius: 6px;
+  border: 1px solid var(--line);
+}
+
 .reviews-grid {
   display: flex;
   flex-direction: column;
@@ -814,4 +817,5 @@ section h2 {
 
 @media (min-width: 600px) {
   .carousel-item img { aspect-ratio: 4 / 3; }
+  .review-pair img { aspect-ratio: auto; }
 }
