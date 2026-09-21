@@ -762,7 +762,7 @@ section h2 {
 .floating-cta {
   position: fixed;
   bottom: 18px;
-  right: 18px;
+  left: 18px;
   z-index: 60;
   background: var(--oak);
   color: #fff;
