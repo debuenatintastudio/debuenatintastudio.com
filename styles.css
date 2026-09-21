@@ -1,12 +1,12 @@
 :root {
-  --cream: #17140F;
-  --stone: #211D17;
-  --stone-deep: #2E281F;
-  --taupe: #8F8676;
-  --taupe-text: #B8AF9F;
+  --cream: #F4F1EA;
+  --stone: #EAE6DD;
+  --stone-deep: #C9C4B8;
+  --taupe: #A39A89;
+  --taupe-text: #6B655C;
   --oak: #D6402F; /* acento rojo */
-  --ink: #F4F1EA;
-  --line: #322C24;
+  --ink: #201E1B;
+  --line: #D8D3C9;
   --font-display: 'Fraunces', Georgia, serif;
   --font-body: 'Inter', -apple-system, sans-serif;
 }
@@ -147,8 +147,11 @@ img { max-width: 100%; display: block; }
 }
 
 .hero h1 {
-  font-size: clamp(26px, 6.5vw, 34px);
-  line-height: 1.2;
+  font-size: clamp(28px, 7vw, 38px);
+  font-weight: 800;
+  line-height: 1.18;
+  letter-spacing: -0.5px;
+  text-align: center;
   margin-bottom: 24px;
   color: var(--ink);
 }
@@ -395,9 +398,9 @@ img { max-width: 100%; display: block; }
 input[type="text"], input[type="tel"], textarea, input[type="file"] {
   width: 100%;
   padding: 12px 14px;
-  border: 1px solid rgba(0,0,0,0.15);
+  border: 1px solid rgba(255,255,255,0.18);
   border-radius: 4px;
-  background: rgba(0,0,0,0.04);
+  background: rgba(255,255,255,0.07);
   font-family: var(--font-body);
   font-size: 14.5px;
   color: var(--cream);
@@ -418,8 +421,8 @@ textarea { resize: vertical; }
 }
 
 .chip {
-  background: rgba(0,0,0,0.04);
-  border: 1px solid rgba(0,0,0,0.18);
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.22);
   color: var(--cream);
   font-size: 13px;
   padding: 9px 16px;
@@ -435,8 +438,8 @@ textarea { resize: vertical; }
 }
 
 .toggle-btn {
-  background: rgba(0,0,0,0.04);
-  border: 1px solid rgba(0,0,0,0.18);
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.22);
   color: var(--cream);
   font-size: 13.5px;
   padding: 10px 26px;
@@ -499,7 +502,7 @@ textarea { resize: vertical; }
 
 .thank-you-body {
   font-size: 14px;
-  color: #6B6355;
+  color: var(--taupe);
   margin: 0 0 8px;
 }
 
@@ -761,8 +764,8 @@ section h2 {
   bottom: 18px;
   right: 18px;
   z-index: 60;
-  background: var(--ink);
-  color: var(--cream);
+  background: var(--oak);
+  color: #fff;
   text-decoration: none;
   font-size: 13px;
   font-weight: 600;
@@ -776,7 +779,7 @@ section h2 {
 }
 
 .floating-cta:hover {
-  background: #3a352e;
+  background: #b8331f;
 }
 
 .floating-cta.visible {
