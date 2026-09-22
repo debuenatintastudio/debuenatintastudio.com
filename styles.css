@@ -128,16 +128,11 @@ img { max-width: 100%; display: block; }
   position: relative;
   padding: 40px 20px 48px;
   overflow: hidden;
+  background: #fff;
 }
 
 .hero-bg {
-  position: absolute;
-  inset: 0;
-  background-image: url("hero-bg.jpg");
-  background-size: cover;
-  background-position: center;
-  opacity: 0.6;
-  transform: scale(1.1);
+  display: none;
 }
 
 .hero-content {
