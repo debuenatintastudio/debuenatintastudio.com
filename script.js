@@ -6,6 +6,9 @@ const FORM_ENDPOINT = "https://formspree.io/f/xzezpejp";
 // 2) Webhook del equipo del bot (n8n) — recibe los datos del formulario
 //    en cuanto alguien lo envía, en paralelo al envío a Formspree.
 const WEBHOOK_ENDPOINT = "https://n8n.aiagencyusa.com/webhook/1f1d5a94-4338-43d6-b4a6-4ff112d00d0a";
+
+// 3) Endpoint propio (Vercel) que reenvía el lead a Meta Conversions API.
+const CAPI_ENDPOINT = "/api/lead";
 // -------------------------------------------
 
 // Menú móvil
@@ -37,7 +40,6 @@ function setupRadioGroup(groupEl, hiddenInput) {
 }
 
 setupRadioGroup(document.getElementById("sizeChips"), document.getElementById("tamanoInput"));
-setupRadioGroup(document.getElementById("zonaChips"), document.getElementById("zonaInput"));
 setupRadioGroup(document.getElementById("asesoramientoToggle"), document.getElementById("asesoramientoInput"));
 
 // Acordeón de preguntas frecuentes
@@ -49,19 +51,6 @@ document.querySelectorAll(".accordion-trigger").forEach((trigger) => {
     panel.style.maxHeight = isOpen ? "0px" : panel.scrollHeight + "px";
   });
 });
-
-// Botón flotante: se muestra cuando el formulario deja de estar a la vista
-const floatingCta = document.getElementById("floatingCta");
-const heroSection = document.getElementById("formulario");
-const heroObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      floatingCta.classList.toggle("visible", !entry.isIntersecting);
-    });
-  },
-  { threshold: 0.1 }
-);
-heroObserver.observe(heroSection);
 
 // Revelado de las categorías del portfolio al hacer scroll
 const revealObserver = new IntersectionObserver(
@@ -112,65 +101,8 @@ const submitBtn = document.getElementById("submitBtn");
 const formStatus = document.getElementById("formStatus");
 const tamanoInput = document.getElementById("tamanoInput");
 const tamanoError = document.getElementById("tamanoError");
-const zonaInput = document.getElementById("zonaInput");
-const zonaError = document.getElementById("zonaError");
 const asesoramientoInput = document.getElementById("asesoramientoInput");
 const asesoramientoError = document.getElementById("asesoramientoError");
-
-// Navegación del formulario por pasos
-const steps = Array.from(document.querySelectorAll(".form-step"));
-const totalSteps = steps.length;
-const progressFill = document.getElementById("progressFill");
-const prevStepBtn = document.getElementById("prevStepBtn");
-const nextStepBtn = document.getElementById("nextStepBtn");
-const descripcionInput = document.getElementById("descripcion");
-let currentStep = 1;
-
-function showStep(n) {
-  steps.forEach((step) => {
-    step.hidden = Number(step.dataset.step) !== n;
-  });
-  progressFill.style.width = (n / totalSteps) * 100 + "%";
-  prevStepBtn.hidden = n === 1;
-  nextStepBtn.hidden = n === totalSteps;
-  submitBtn.hidden = n !== totalSteps;
-}
-
-function stepIsValid(n) {
-  if (n === 1) {
-    tamanoError.classList.toggle("visible", !tamanoInput.value);
-    return !!tamanoInput.value;
-  }
-  if (n === 2) {
-    zonaError.classList.toggle("visible", !zonaInput.value);
-    return !!zonaInput.value;
-  }
-  if (n === 3) {
-    asesoramientoError.classList.toggle("visible", !asesoramientoInput.value);
-    return !!asesoramientoInput.value;
-  }
-  if (n === 4) {
-    if (!descripcionInput.value.trim()) {
-      descripcionInput.reportValidity();
-      return false;
-    }
-    return true;
-  }
-  return true;
-}
-
-nextStepBtn.addEventListener("click", () => {
-  if (!stepIsValid(currentStep)) return;
-  currentStep = Math.min(currentStep + 1, totalSteps);
-  showStep(currentStep);
-});
-
-prevStepBtn.addEventListener("click", () => {
-  currentStep = Math.max(currentStep - 1, 1);
-  showStep(currentStep);
-});
-
-showStep(currentStep);
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -180,9 +112,8 @@ form.addEventListener("submit", async (e) => {
   let valid = form.checkValidity();
 
   tamanoError.classList.toggle("visible", !tamanoInput.value);
-  zonaError.classList.toggle("visible", !zonaInput.value);
   asesoramientoError.classList.toggle("visible", !asesoramientoInput.value);
-  if (!tamanoInput.value || !zonaInput.value || !asesoramientoInput.value) valid = false;
+  if (!tamanoInput.value || !asesoramientoInput.value) valid = false;
 
   if (!valid) {
     form.reportValidity();
@@ -200,6 +131,14 @@ form.addEventListener("submit", async (e) => {
     // Datos en formato simple para el webhook (JSON)
     const payload = Object.fromEntries(formData.entries());
 
+    // ID único para este envío — se usa para que Meta pueda deduplicar
+    // el evento "Lead" que dispara el navegador (Pixel) con el que
+    // dispara nuestro servidor (Conversions API), y no se cuenten dos veces.
+    const eventId =
+      window.crypto && crypto.randomUUID
+        ? crypto.randomUUID()
+        : `lead_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+
     // Se manda al webhook del bot en paralelo; si falla, no bloquea el
     // envío principal a Formspree ni la experiencia del cliente.
     fetch(WEBHOOK_ENDPOINT, {
@@ -208,6 +147,14 @@ form.addEventListener("submit", async (e) => {
       body: JSON.stringify(payload),
     }).catch((err) => console.error("Webhook error:", err));
 
+    // Se manda a nuestro endpoint propio, que reenvía el lead a Meta
+    // Conversions API (server-side). También en paralelo, sin bloquear.
+    fetch(CAPI_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...payload, eventId }),
+    }).catch((err) => console.error("CAPI endpoint error:", err));
+
     const response = await fetch(FORM_ENDPOINT, {
       method: "POST",
       headers: { Accept: "application/json" },
@@ -215,6 +162,10 @@ form.addEventListener("submit", async (e) => {
     });
 
     if (!response.ok) throw new Error("submit_failed");
+
+    // Evento del Pixel (navegador), con el mismo eventId que el envío
+    // server-side de arriba, para que Meta los deduplique en uno solo.
+    fbq("track", "Lead", {}, { eventID: eventId });
 
     form.hidden = true;
     const thankYou = document.getElementById("thankYou");
