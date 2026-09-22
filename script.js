@@ -1,4 +1,4 @@
-// ----/ CONFIGURA ESTO ANTES DE PUBLICAR ----
+// ---- CONFIGURA ESTO ANTES DE PUBLICAR ----
 // 1) Crea una cuenta gratis en https://formspree.io, crea un formulario nuevo
 //    y pega aquí el endpoint que te da (algo como "https://formspree.io/f/abcd1234")
 const FORM_ENDPOINT = "https://formspree.io/f/xzezpejp";
